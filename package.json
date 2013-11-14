@@ -1,0 +1,9 @@
+{
+  "name": "upyun",
+  "version": "0.0.0",
+  "description": "",
+  "author": "undoZen",
+  "dependencies": {
+    "connect": "latest"
+  }
+}

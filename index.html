@@ -1,0 +1,40 @@
+<style>
+    #holder {
+        border: 2px dotted #ccc;
+        width: 500px;
+        height: 500px;
+        margin: 50px auto;
+    }
+    #holder.hover {
+        border: 2px dotted #000;
+    }
+</style>
+
+<div id="holder"></div>
+
+<script>
+var holder = document.getElementById('holder')
+
+holder.ondragover = function () { this.className = 'hover'; return false; };
+holder.ondragend = function () { this.className = ''; return false; };
+holder.ondrop = function (e) {
+    e.preventDefault();
+    
+    files = e.dataTransfer.files;
+    console.log(files);
+    reader.readAsBinaryString(files[0]);
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/upload', true);
+  var formData = new FormData();
+  formData.append('file', files[0]);
+  formData.append('path', prompt('path?', '/'));
+  xhr.send(formData);
+}
+var reader = new FileReader();
+reader.onload = function (e) {
+  console.log(e.target)
+  result = e.target.result
+
+}
+
+</script>
