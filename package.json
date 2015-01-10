@@ -1,9 +1,10 @@
 {
-  "name": "upyun",
+  "name": "dnd-upload-upyun",
   "version": "0.0.0",
   "description": "",
   "author": "undoZen",
+  "main": "app.js",
   "dependencies": {
-    "connect": "latest"
+    "connect-multiparty": "^1.2.5"
   }
 }
