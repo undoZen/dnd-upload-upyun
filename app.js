@@ -19,7 +19,7 @@ var upyun = new UPYun(config.bucketname, config.username, config.password);
 var server = http.createServer(function (req, res) {
   if (req.url != '/upload') {
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    fs.createReadStream('./index.html').pipe(res);
+    fs.createReadStream(__dirname + '/index.html').pipe(res);
   } else multiParty()(req, res, function () {
   console.log(req);
   upyun.writeFile(req.body.path, fs.readFileSync(req.files.file.path), true, function (err, res) {
