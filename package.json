@@ -4,6 +4,7 @@
   "description": "",
   "author": "undoZen",
   "main": "app.js",
+  "bin": "app.js",
   "dependencies": {
     "connect-multiparty": "^1.2.5"
   }
