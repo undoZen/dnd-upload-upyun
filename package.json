@@ -8,6 +8,7 @@
     "dnd-upload-upyun": "app.js"
   },
   "dependencies": {
-    "connect-multiparty": "^1.2.5"
+    "connect-multiparty": "^1.2.5",
+    "uuid": "^2.0.1"
   }
 }
