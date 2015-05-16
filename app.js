@@ -39,6 +39,6 @@ var server = http.createServer(function (req, res) {
       res.statusCode = 404;
       res.end('not found');
   }
-}).listen(function () {
+}).listen(process.env.PORT || 0, function () {
   console.log('server listening: http://127.0.0.1:' + server.address().port);
 });
