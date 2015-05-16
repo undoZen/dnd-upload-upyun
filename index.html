@@ -39,41 +39,41 @@ holder.ondragover = function () { this.className = 'hover'; return false; };
 holder.onmouseout = holder.ondragend = function () { this.className = ''; return false; };
 holder.ondrop = function (e) {
     e.preventDefault();
-    
+
     files = e.dataTransfer.files;
     console.log(files);
     reader.readAsBinaryString(files[0]);
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/upload', true);
-  var formData = new FormData();
-  formData.append('file', files[0]);
-  if (!GP) {
-      formData.append('path', prompt('path?', '/'));
-  }
-  xhr.send(formData);
-  fetch('/upload', {
-    method: 'POST',
-    body: formData,
-  }).then(function (response) {
-      return response.json();
-  }).then(function (json) {
-      var ul = document.querySelector('#recent ul');
-      var firstChild = ul.childNodes[0];
-      var li = document.createElement('li');
-      var url = 'http://' + BUCKET + '.b0.upaiyun.com' + json.filePath;
-      li.innerHTML = '<pre><a target="_blank" href="'+url+'">'+url+'</a></pre>';
-      if (firstChild) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload', true);
+    var formData = new FormData();
+    formData.append('file', files[0]);
+    if (!GP) {
+        formData.append('path', prompt('path?', '/'));
+    }
+    xhr.send(formData);
+    fetch('/upload', {
+method: 'POST',
+body: formData,
+}).then(function (response) {
+    return response.json();
+    }).then(function (json) {
+        var ul = document.querySelector('#recent ul');
+        var firstChild = ul.childNodes[0];
+        var li = document.createElement('li');
+        var url = 'http://' + BUCKET + '.b0.upaiyun.com' + json.filePath;
+        li.innerHTML = '<pre><a target="_blank" href="'+url+'">'+url+'</a></pre>';
+        if (firstChild) {
         ul.insertBefore(li, firstChild);
-      } else {
+        } else {
         ul.appendChild(li);
-      }
-      console.log(json);
-  });
+        }
+        console.log(json);
+        });
 }
 var reader = new FileReader();
 reader.onload = function (e) {
-  console.log(e.target)
-  result = e.target.result
+    console.log(e.target)
+        result = e.target.result
 
 }
 
