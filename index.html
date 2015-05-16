@@ -1,22 +1,42 @@
 <style>
+    #recent {
+        margin: 20px;
+    }
+    #holder {
+        width: 100%;
+        margin: 20px auto;
+    }
     #holder {
         border: 2px dotted #ccc;
-        width: 500px;
-        height: 500px;
-        margin: 50px auto;
+        min-height: 200px;
     }
     #holder.hover {
-        border: 2px dotted #000;
+        border: 2px dotted #333;
+    }
+    #holder.hover .h1normal, .drop2upload {
+        display: none;
+    }
+    #holder.hover .drop2upload {
+        display: block;
     }
 </style>
 
-<div id="holder"></div>
+<div id="holder">
+<div id="recent">
+    <h1 class="h1normal">拖动图片到此处上传</h1>
+    <h1 class="drop2upload">放开图片开始上传</h1>
+    <h2>最近添加</h2>
+    <ul></ul>
+</div>
+</div>
 
 <script>
 var holder = document.getElementById('holder')
+var BUCKET = "__BUCKET_NAME__";
+var GP = "__GENERATE_PATH__";
 
 holder.ondragover = function () { this.className = 'hover'; return false; };
-holder.ondragend = function () { this.className = ''; return false; };
+holder.onmouseout = holder.ondragend = function () { this.className = ''; return false; };
 holder.ondrop = function (e) {
     e.preventDefault();
     
@@ -27,8 +47,28 @@ holder.ondrop = function (e) {
   xhr.open('POST', '/upload', true);
   var formData = new FormData();
   formData.append('file', files[0]);
-  formData.append('path', prompt('path?', '/'));
+  if (!GP) {
+      formData.append('path', prompt('path?', '/'));
+  }
   xhr.send(formData);
+  fetch('/upload', {
+    method: 'POST',
+    body: formData,
+  }).then(function (response) {
+      return response.json();
+  }).then(function (json) {
+      var ul = document.querySelector('#recent ul');
+      var firstChild = ul.childNodes[0];
+      var li = document.createElement('li');
+      var url = 'http://' + BUCKET + '.b0.upaiyun.com' + json.filePath;
+      li.innerHTML = '<pre><a target="_blank" href="'+url+'">'+url+'</a></pre>';
+      if (firstChild) {
+        ul.insertBefore(li, firstChild);
+      } else {
+        ul.appendChild(li);
+      }
+      console.log(json);
+  });
 }
 var reader = new FileReader();
 reader.onload = function (e) {
