@@ -1,11 +1,11 @@
 {
   "name": "dnd-upload-upyun",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "",
   "author": "undoZen",
   "main": "app.js",
   "scripts": {
-      "polyfill": "(cat node_modules/es5-shim/es5-shim.min.js; echo ';'; cat node_modules/es5-shim/es5-sham.min.js; echo ';'; cat node_modules/es6-promise/dist/es6-promise.min.js; echo ';'; cat node_modules/fetch-polyfill/fetch.js) > polyfill.js"
+    "polyfill": "(cat node_modules/es5-shim/es5-shim.min.js; echo ';'; cat node_modules/es5-shim/es5-sham.min.js; echo ';'; cat node_modules/es6-promise/dist/es6-promise.min.js; echo ';'; cat node_modules/fetch-polyfill/fetch.js) > polyfill.js"
   },
   "bin": {
     "dnd-upload-upyun": "app.js"
