@@ -31,6 +31,7 @@
 </div>
 
 <script>
+"__POLYFILL__";
 var holder = document.getElementById('holder')
 var BUCKET = "__BUCKET_NAME__";
 var GP = "__GENERATE_PATH__";
@@ -43,38 +44,37 @@ holder.ondrop = function (e) {
     files = e.dataTransfer.files;
     console.log(files);
     reader.readAsBinaryString(files[0]);
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/upload', true);
     var formData = new FormData();
     formData.append('file', files[0]);
     if (!GP) {
         formData.append('path', prompt('path?', '/'));
     }
-    xhr.send(formData);
     fetch('/upload', {
-method: 'POST',
-body: formData,
-}).then(function (response) {
-    return response.json();
-    }).then(function (json) {
-        var ul = document.querySelector('#recent ul');
-        var firstChild = ul.childNodes[0];
-        var li = document.createElement('li');
-        var url = 'http://' + BUCKET + '.b0.upaiyun.com' + json.filePath;
-        li.innerHTML = '<pre><a target="_blank" href="'+url+'">'+url+'</a></pre>';
-        if (firstChild) {
-        ul.insertBefore(li, firstChild);
-        } else {
-        ul.appendChild(li);
-        }
-        console.log(json);
+        method: 'POST',
+        body: formData,
+        }).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            var ul = document.querySelector('#recent ul');
+            var firstChild = ul.childNodes[0];
+            var li = document.createElement('li');
+            var url = 'http://' + BUCKET + '.b0.upaiyun.com' + json.filePath;
+            li.innerHTML = '<pre><a target="_blank" href="'+url+'">'+url+'</a></pre>';
+            if (firstChild) {
+            ul.insertBefore(li, firstChild);
+            } else {
+            ul.appendChild(li);
+            }
+            console.log(json);
         });
-}
-var reader = new FileReader();
-reader.onload = function (e) {
-    console.log(e.target)
-        result = e.target.result
+    }
+    var reader = new FileReader();
+    /*
+    reader.onload = function (e) {
+        console.log(e.target)
+            result = e.target.result
 
-}
+    }
+    */
 
 </script>

@@ -18,6 +18,7 @@ try {
 var upyun = new UPYun(config.bucketname, config.username, config.password);
 
 var indexSrc = fs.readFileSync(__dirname + '/index.html', 'utf8')
+.replace('"__POLYFILL__"', fs.readFileSync(__dirname + '/polyfill.js'))
 .replace('__BUCKET_NAME__', config.bucketname)
 .replace('"__GENERATE_PATH__"', config.generatePath ? 'true' : 'false')
 
